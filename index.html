@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+    .form{
+      font-size:50px;
+    }
+  </style>
+  <body>
+    <!-- 视频
+    <video src="VID.mp4" width="400px" height="300px" controls="controls" autoplay="autoplay">
+
+    </video> -->
+
+    <!-- 音频
+    <audio autoplay="autoplay" src="shalong.mp3" controls="controls">
+    </audio> -->
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <br>
+    <button type="button" name="button1" onclick="blue()">蓝色</button>
+    <button type="button" name="button2" onclick="green()">绿色</button>
+    <button type="button" name="button3" onclick="red()">红色</button>
+    <button type="button" name="button4" onclick="yellow()">黄色</button>
+    <button type="button" name="button5" onclick="pink()">粉色</button>
+    <button type="button" name="button6" onclick="orange()">橙色</button>
+    <!-- <button type="button" name="button7" onclick="clear()">清除</button> -->
+  </body>
+  <script type="text/javascript">
+    var c = document.getElementById("canvas");
+    var cxt = c.getContext("2d");
+    cxt.fillStyle = "white";
+    cxt.fillRect(0, 0, 300, 300);
+    cxt.strokeStyle = "red";
+    cxt.linewidth = 5;
+    var mousePress = false;
+    var last = null
+
+    function blue(){
+      cxt.strokeStyle = "blue";
+    }
+    function green(){
+      cxt.strokeStyle = "green";
+    }
+    function red(){
+      cxt.strokeStyle = "red";
+    }
+    function yellow(){
+      cxt.strokeStyle = "yellow";
+    }
+    function pink(){
+      cxt.strokeStyle = "pink";
+    }
+    function orange(){
+      cxt.strokeStyle = "orange";
+    }
+    // function clear(){
+    //   var c = document.getElementById("canvas");
+    //   var cxt = c.getContext("2d");
+    //   cxt.fillStyle = "white";
+    //   cxt.beginPath();
+    //   cxt.fillRect(0, 0, 300, 300);
+    //   cxt.closePath();
+    // }
+
+    function getpos(event){
+      var ex, ey;
+      ex = event.clientX;
+      ey = event.clientY;
+      return{
+        x:ex,
+        y:ey
+      }
+    }
+
+    function start(event){
+      mousePress = true;
+      last = getpos(event);
+    }
+
+    function draw(event){
+      if(!mousePress) return;
+      var xy = getpos(event);
+      if(last!=null){
+        cxt.beginPath();
+		    cxt.moveTo(last.x,last.y);
+		    cxt.lineTo(xy.x,xy.y);
+		    cxt.stroke();
+		  }
+		  last=xy;
+    }
+
+    function finish(event){
+      mousePress = false;
+      last = null;
+    }
+    c.onmousedown = start;
+    c.onmousemove = draw;
+    c.onmouseup = finish;
+
+  </script>
+</html>
